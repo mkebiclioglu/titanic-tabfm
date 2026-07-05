@@ -9,10 +9,30 @@ It answers one question:
 > How does zero-shot TabFM perform against a straightforward XGBoost baseline on
 > the Titanic dataset?
 
-Both models use the **same** train/test split, target, and preprocessing. This
-is a first smoke test, not a broad validation of TabFM's general claims. See
+Both models use the **same** train/test split, target, and preprocessing.
+
+## Results
+
+On the held-out test set (179 passengers), **zero-shot TabFM beat the default
+XGBoost baseline on every metric** — without ever training on the data:
+
+| model | accuracy | ROC AUC | F1 | precision | recall |
+|---|---|---|---|---|---|
+| XGBoost (default) | 0.788 | 0.807 | 0.708 | 0.754 | 0.667 |
+| **TabFM (zero-shot)** | **0.816** | **0.862** | **0.740** | **0.810** | **0.681** |
+
+- **+0.054 ROC AUC** for TabFM (the main comparison metric), the equivalent of a
+  meaningfully better-ranked model.
+- TabFM was **zero-shot**: no gradient training on Titanic. It read the training
+  rows as in-context examples at prediction time.
+- It won with a **reduced ensemble** (`n_estimators=8` vs the library default of
+  32, for CPU speed), so this likely *understates* TabFM's full configuration.
+
+**Read it honestly:** Titanic is a tiny, easy dataset and this is a single-split
+smoke test. It shows TabFM is a credible out-of-the-box tabular predictor here —
+it does **not** prove TabFM beats gradient boosting in general. See
 [`reports/titanic_benchmark_report.md`](reports/titanic_benchmark_report.md) for
-the write-up.
+the full write-up and caveats.
 
 ## Layout
 
