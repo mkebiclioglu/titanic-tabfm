@@ -1,0 +1,9 @@
+# Core benchmark dependencies
+numpy>=1.26
+pandas>=2.0
+scikit-learn>=1.4
+xgboost>=2.0
+
+# TabFM is installed separately from the official Google Research repo.
+# See README.md for instructions. It is not pinned here because it is
+# installed in editable mode from a git clone.
